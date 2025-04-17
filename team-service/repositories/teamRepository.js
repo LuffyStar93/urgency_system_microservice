@@ -1,7 +1,8 @@
 import Team from "../models/Team.js"
 
 export const createTeam = async (data) => {
-    return await Team.create({ ...data })
+    console.log(data)
+    return await Team.create({ type: data })
 }
 
 

@@ -4,25 +4,27 @@
  */
 export class TeamDTO {
     /**
-     * @param {string} id - Identifiant de la commande
+
+     * @param {string} id - Items de la commande
      * @param {string} type - Items de la commande
-     * @param {Boolean} availability - Items de la commande
-     * @param {Date} createdAt - Date de création
-     * @param {Date} updatedAt
+     * @param {boolean} availability - Items de la commande
      */
 
-    constructor(id, type, availability, createdAt) {
-      this.id = id;
-      this.type = type;
-      this.availability = availability;
-      this.createdAt = createdAt;
-      this.updatedAt = updatedAt;
+    constructor(data) {
+      this.id = data._id;
+      this.type = data.type;
+      this.availability = data.availability;
     }
 
-    validate(availability) {
-        if (!availability || availability === false ) {
+    validate(type) {
+        if (!type) {
           throw new Error('La team est indisponible');
         }
+        return true
+    }
+
+    static fromEntity(team){
+      return new TeamDTO(team)
     }
   
     /**
@@ -34,8 +36,6 @@ export class TeamDTO {
         id: this.id,
         type: this.type,
         availability: this.availability,
-        createdAt: this.createdAt,
-        updatedAt: this.updatedAt
       };
     }
   } 

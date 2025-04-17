@@ -1,12 +1,19 @@
-import { TeamDTO } from "../../team-service/dtos/teamDto";
-import { createTeam, getAllTeams } from "../repositories/teamRepository.js";
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
-export const createNewTeam = async (type) => {
-    return TeamDTO;
-    return await createTeam({ type });
+export const createNewTeam = async (type, availability) => {
+    const response = await axios.post(process.env.TEAM_SERVICE_URL, { type, availability }) 
+    return response.data
 }
 
 
 export const fetchTeams = async () => {
-    return await getAllTeams();
+    const response = await axios.get(process.env.TEAM_SERVICE_URL) 
+    return response.data
+}
+
+export const fetchTeamAvailable = async () => {
+    const response = await axios.get(process.env.TEAM_SERVICE_URL+'/available') 
+    return response.data
 }
