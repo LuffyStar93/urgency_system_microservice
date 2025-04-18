@@ -12,27 +12,33 @@ export const getAllTeams = async () => {
 
 export const getAvailableTeams = async () => {
     // updateOne, findByIdAndUpdate, findOneAndUpdate
-    const availableTeam = await Team.findOneAndUpdate(
+    const availableTeam = await Team.findOne(
         {
             availability: true
         }, //le filtre de recherche
-        {
-            availability: false
-        },
-         // Le champ que je veux mettre à jour, en l'occurence je change la disponibilité de l'équipe
-        {
-            sort: { updatedAt: 1 }
-        } // Exemple:  Team A a cloturé un incident à 14h00 => Availability : true DONC updatedAt: 14h00
-        // Team B cloture un incidentà 10h00 => Availability: true DONC updatedAt: 10h00
-        // En réalisant le sort, il me prendra l'équipe de 10h00
-        // Team C on modifie son type à 17h00 mais son availability est true depuis 9h00
-        // Le sort prendra toujours en compte la Team B
+       
     )
-    console.log(availableTeam);
-
+    console.log(availableTeam)
     if (!availableTeam) {
         throw new Error("No available teams to assign to the incident")
     }
 
     return availableTeam
 }
+
+export const updateTeamAvailability = async (data) => {
+    // On récupère l'équipe par son data
+    const team = await Team.findById(data.teamId);
+    if (!team) {
+        throw new Error("Team not found");
+    }
+
+    // On inverse la disponibilité
+    team.availability = !team.availability;
+
+    // On sauvegarde la modification
+    await team.save();
+
+    console.log(team.availability);
+    return team;
+};

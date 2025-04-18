@@ -53,6 +53,12 @@ export class IncidentDTO {
         );
     }
 
+    validate(data){
+        if (!data.localisation  || !data.description || !data.callerId) {
+            throw new Error("remplir tout les champs");
+        }
+    }
+
     /**
      * 
      * @returns {Object}

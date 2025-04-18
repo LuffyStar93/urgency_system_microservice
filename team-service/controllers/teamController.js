@@ -40,21 +40,33 @@ export const getTeams = async (req, res) => {
 }
 
 export const getAvailableTeams = async (req, res) => {
+    console.log('test')
     try {
         const teams = await teamRepository.getAvailableTeams();
-        const jsonArray = []
-        if (teams) {
-            teams.forEach(team => {
-                const type = team.type;
-                const availability = team.availability;
-
-                const teamDto = new TeamDTO(type, availability);
-                jsonArray.push(teamDto.toJSON()) 
-            });
-        }
-
-        res.status(200).json(jsonArray)
+        res.status(200).json(teams)
     } catch (err) {
         res.status(500).json({ error: err.message, success: false })
     }
+
+    
 }
+
+export const updateTeam = async (req, res) => {
+    try {
+        const data = req.body;
+        console.log(data)
+        const updatedTeam = await teamRepository.updateTeamAvailability(data);
+        // console.log(updateTeam)
+        return res.status(200).json({
+            success: true,
+            message: "Team availability updated successfully",
+            data: updatedTeam
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Couldn't update team availability",
+            error: error.message
+        });
+    }
+};
