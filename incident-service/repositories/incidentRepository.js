@@ -12,7 +12,7 @@ export const createIncident = async (data) => {
 
 
 export const getAllIncidents = async () => {
-
+    // console.log('test repo');
     return await Incident.find()
 
 }

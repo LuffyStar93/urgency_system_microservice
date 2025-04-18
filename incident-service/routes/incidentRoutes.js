@@ -3,9 +3,10 @@ import { createIncident, getIncidents, updateIncident } from "../controllers/inc
 
 const incidentRouter = Router();
 
+incidentRouter.get("/api", getIncidents);
 incidentRouter.post("/api", createIncident);
 incidentRouter.patch("/api", updateIncident);
-incidentRouter.get("/api", getIncidents);
+
 
 
 export default incidentRouter;

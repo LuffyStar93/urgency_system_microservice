@@ -43,7 +43,9 @@ export const updateIncident = async (req, res) => {
 }
 
 export const getIncidents = async () => {
+    console.log("test controller");
     const incidents = incidentRepository.getAllIncidents()
+    console.log(incidents);
     try {  
         const jsonArray = []
         if (incidents) {
